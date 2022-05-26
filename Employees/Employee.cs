@@ -9,12 +9,22 @@ namespace Employees
    
     internal class Employee
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string FullName { get; set; }
-        public DateTime StartDate { get; set; }
-        public string Title { get; set; }
-        public double Salary { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string fullName { get; set; }
+        public DateTime startDate { get; set; }
+        public string title { get; set; }
+        public double salary { get; set; }
+
+        public Employee(string firstName, string lastName, DateTime startDate, string title, double salary)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.fullName = firstName + " " + lastName;
+            this.startDate = startDate;
+            this.title = title;
+            this.salary = salary;
+        }
 
         public void Working()
         {
@@ -28,12 +38,12 @@ namespace Employees
 
         public void ShowTitle()
         {
-            Console.WriteLine("My title is {0}", this.Title);
+            Console.WriteLine("My title is {0}", this.title);
         }
 
         public void ShowSalary()
         {
-            Console.WriteLine("My salary is {0}", string.Format("{0:C}", this.Salary));
+            Console.WriteLine("My salary is {0}", string.Format("{0:C}", this.salary));
         }
     }
 }
