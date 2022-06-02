@@ -4,28 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Employees
 {
    
-    internal class Employee
+    internal class Employee : Person
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string fullName { get; set; }
-        public DateTime startDate { get; set; }
-        public string title { get; set; }
-        public double salary { get; set; }
-        public int bonusPercentage { get; set; }
+       
+        public DateTime StartDate { get; set; }
+        public string Title { get; set; }
+        public double Salary { get; set; }
+        public int BonusPercentage { get; set; }
 
-        public Employee(string firstName, string lastName, DateTime startDate, string title, double salary, int bonusPercentage)
+        public Employee(string firstName, string lastName, DateTime dateOfBirth, string gender, DateTime startDate, string title, double salary, int bonusPercentage) :base(firstName, lastName, dateOfBirth, gender)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.fullName = firstName + " " + lastName;
-            this.startDate = startDate;
-            this.title = title;
-            this.salary = salary;
-            this.bonusPercentage = bonusPercentage;
+            this.StartDate = startDate;
+            this.Title = title;
+            this.Salary = salary;
+            this.BonusPercentage = bonusPercentage;
  
         }
 
@@ -41,12 +37,17 @@ namespace Employees
 
         public void ShowTitle()
         {
-            Console.WriteLine("My title is {0}", this.title);
+            Console.WriteLine("My title is {0}", this.Title);
         }
 
         public void ShowSalary()
         {
-            Console.WriteLine("My salary is {0}", string.Format("{0:C}", this.salary));
+            Console.WriteLine("My salary is {0}", string.Format("{0:C}", this.Salary));
+        }
+
+        public void ShowFullName()
+        {
+            Console.WriteLine("My full name is {0}", this.FullName);
         }
 
         public void CalculateRaise()
@@ -55,19 +56,43 @@ namespace Employees
             
             try
             {
-                raiseAmnt = (decimal)this.salary / this.bonusPercentage;
+                raiseAmnt = (decimal)this.Salary / this.BonusPercentage;
                 Console.WriteLine("My raise will be {0}", string.Format("{0:C}", raiseAmnt));
                
             }
 
             catch (DivideByZeroException ex)
             {
-                Console.WriteLine("Exception caught: {0}", ex.Message);
+                Console.WriteLine("There will be no raise in pay: {0}, ", ex.Message);
             }
 
 
         
             
+        }
+        public bool IsEligibleForRaise()
+        {
+            TimeSpan workTime = DateTime.Today - StartDate;
+            if ( workTime.Days > 180)
+                return true;
+            else
+                return false;
+        }
+
+        public void PayBonus()
+        {
+            int bonusPercent = 25;
+            double bonus = 0;
+            if (IsEligibleForRaise())
+            {
+                bonus = this.Salary / bonusPercent;
+                Console.WriteLine("My bonus will be {0}", bonus);
+            }
+            else
+            {
+                Console.WriteLine("I have not worked here for six months yet, so I will not receive a bonus.");
+            }
+
         }
     }
 }
